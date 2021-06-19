@@ -4,39 +4,38 @@
 int main(int, char **)
 {
 
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML Testing", sf::Style::Default);
+    sf::RenderWindow window(sf::VideoMode(500, 500), "SFML Testing", sf::Style::Default);
+    sf::RectangleShape test(sf::Vector2f(50.0f, 100.0f));
+    test.setFillColor(sf::Color::Red);
+    test.setPosition(0.0f, 450.0f);
 
     while (window.isOpen())
     {
 
+        // handle window events
         sf::Event evnt;
         while (window.pollEvent(evnt))
         {
-            if (evnt.type == evnt.Closed)
+
+            switch (evnt.type)
             {
+            case sf::Event::Closed:
                 window.close();
+                break;
+
+            case sf::Event::Resized:
+                // std::cout << "Window Width: " << evnt.size.width << " Widnow Height: " << evnt.size.height << '\n';
+                break;
             }
         }
+
+        // clear the window
+        window.clear();
+
+        // draw
+        window.draw(test);
+
+        // end the current frame
+        window.display();
     }
 }
-
-// sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-// sf::CircleShape shape(100.f);
-// shape.setFillColor(sf::Color::Green);
-
-// while (window.isOpen())
-// {
-//     sf::Event event;
-//     while (window.pollEvent(event))
-//     {
-//         if (event.type == sf::Event::Closed)
-//             window.close();
-//     }
-
-//     window.clear();
-//     window.draw(shape);
-//     window.display();
-// }
-
-// std::cout << "Hello, world" << '\n';
-// return 0;
