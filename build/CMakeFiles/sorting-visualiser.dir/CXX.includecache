@@ -9,6 +9,10 @@
 /home/cristian/Documents/projects/C++/sorting-algo-visualiser/main.cpp
 iostream
 -
+stdlib.h
+-
+vector
+-
 SFML/Graphics.hpp
 -
 
