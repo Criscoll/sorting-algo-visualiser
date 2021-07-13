@@ -6,13 +6,13 @@
 
 #IncludeRegexTransform: 
 
-/home/cristian/Documents/projects/C++/sorting-algo-visualiser/Button.h
+/home/cristian/Documents/projects/C++/sorting-algo-visualiser/src/headers/button.hpp
 iostream
 -
 SFML/Graphics.hpp
 -
 
-/home/cristian/Documents/projects/C++/sorting-algo-visualiser/main.cpp
+/home/cristian/Documents/projects/C++/sorting-algo-visualiser/src/main.cpp
 iostream
 -
 stdlib.h
@@ -23,6 +23,6 @@ SFML/Graphics.hpp
 -
 unistd.h
 -
-Button.h
-/home/cristian/Documents/projects/C++/sorting-algo-visualiser/Button.h
+./headers/button.hpp
+/home/cristian/Documents/projects/C++/sorting-algo-visualiser/src/headers/button.hpp
 

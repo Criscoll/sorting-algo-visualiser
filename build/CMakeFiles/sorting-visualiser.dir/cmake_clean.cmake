@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/sorting-visualiser.dir/main.cpp.o"
+  "CMakeFiles/sorting-visualiser.dir/src/main.cpp.o"
   "sorting-visualiser"
   "sorting-visualiser.pdb"
 )

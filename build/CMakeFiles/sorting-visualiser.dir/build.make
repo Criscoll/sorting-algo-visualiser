@@ -57,27 +57,27 @@ include CMakeFiles/sorting-visualiser.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/sorting-visualiser.dir/flags.make
 
-CMakeFiles/sorting-visualiser.dir/main.cpp.o: CMakeFiles/sorting-visualiser.dir/flags.make
-CMakeFiles/sorting-visualiser.dir/main.cpp.o: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cristian/Documents/projects/C++/sorting-algo-visualiser/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/sorting-visualiser.dir/main.cpp.o"
-	/bin/x86_64-linux-gnu-g++-9  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sorting-visualiser.dir/main.cpp.o -c /home/cristian/Documents/projects/C++/sorting-algo-visualiser/main.cpp
+CMakeFiles/sorting-visualiser.dir/src/main.cpp.o: CMakeFiles/sorting-visualiser.dir/flags.make
+CMakeFiles/sorting-visualiser.dir/src/main.cpp.o: ../src/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cristian/Documents/projects/C++/sorting-algo-visualiser/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/sorting-visualiser.dir/src/main.cpp.o"
+	/bin/x86_64-linux-gnu-g++-9  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sorting-visualiser.dir/src/main.cpp.o -c /home/cristian/Documents/projects/C++/sorting-algo-visualiser/src/main.cpp
 
-CMakeFiles/sorting-visualiser.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sorting-visualiser.dir/main.cpp.i"
-	/bin/x86_64-linux-gnu-g++-9 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cristian/Documents/projects/C++/sorting-algo-visualiser/main.cpp > CMakeFiles/sorting-visualiser.dir/main.cpp.i
+CMakeFiles/sorting-visualiser.dir/src/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sorting-visualiser.dir/src/main.cpp.i"
+	/bin/x86_64-linux-gnu-g++-9 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cristian/Documents/projects/C++/sorting-algo-visualiser/src/main.cpp > CMakeFiles/sorting-visualiser.dir/src/main.cpp.i
 
-CMakeFiles/sorting-visualiser.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sorting-visualiser.dir/main.cpp.s"
-	/bin/x86_64-linux-gnu-g++-9 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cristian/Documents/projects/C++/sorting-algo-visualiser/main.cpp -o CMakeFiles/sorting-visualiser.dir/main.cpp.s
+CMakeFiles/sorting-visualiser.dir/src/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sorting-visualiser.dir/src/main.cpp.s"
+	/bin/x86_64-linux-gnu-g++-9 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cristian/Documents/projects/C++/sorting-algo-visualiser/src/main.cpp -o CMakeFiles/sorting-visualiser.dir/src/main.cpp.s
 
 # Object files for target sorting-visualiser
 sorting__visualiser_OBJECTS = \
-"CMakeFiles/sorting-visualiser.dir/main.cpp.o"
+"CMakeFiles/sorting-visualiser.dir/src/main.cpp.o"
 
 # External object files for target sorting-visualiser
 sorting__visualiser_EXTERNAL_OBJECTS =
 
-sorting-visualiser: CMakeFiles/sorting-visualiser.dir/main.cpp.o
+sorting-visualiser: CMakeFiles/sorting-visualiser.dir/src/main.cpp.o
 sorting-visualiser: CMakeFiles/sorting-visualiser.dir/build.make
 sorting-visualiser: CMakeFiles/sorting-visualiser.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/cristian/Documents/projects/C++/sorting-algo-visualiser/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable sorting-visualiser"
