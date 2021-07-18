@@ -20,6 +20,18 @@ SFML/Graphics.hpp
 button.hpp
 /home/cristian/Documents/projects/C++/sorting-algo-visualiser/src/headers/button.hpp
 
+/home/cristian/Documents/projects/C++/sorting-algo-visualiser/src/headers/sorter.hpp
+iostream
+-
+SFML/Graphics.hpp
+-
+types.hpp
+/home/cristian/Documents/projects/C++/sorting-algo-visualiser/src/headers/types.hpp
+
+/home/cristian/Documents/projects/C++/sorting-algo-visualiser/src/headers/types.hpp
+SFML/Graphics.hpp
+-
+
 /home/cristian/Documents/projects/C++/sorting-algo-visualiser/src/main.cpp
 iostream
 -
@@ -29,10 +41,12 @@ vector
 -
 SFML/Graphics.hpp
 -
-unistd.h
--
+./headers/sorter.hpp
+/home/cristian/Documents/projects/C++/sorting-algo-visualiser/src/headers/sorter.hpp
 ./headers/button.hpp
 /home/cristian/Documents/projects/C++/sorting-algo-visualiser/src/headers/button.hpp
 ./headers/menu.hpp
 /home/cristian/Documents/projects/C++/sorting-algo-visualiser/src/headers/menu.hpp
+./headers/types.hpp
+/home/cristian/Documents/projects/C++/sorting-algo-visualiser/src/headers/types.hpp
 

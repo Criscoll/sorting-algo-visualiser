@@ -2,9 +2,10 @@
 #include <stdlib.h>
 #include <vector>
 #include <SFML/Graphics.hpp>
-#include <unistd.h>
+#include "./headers/sorter.hpp"
 #include "./headers/button.hpp"
 #include "./headers/menu.hpp"
+#include "./headers/types.hpp"
 
 int main(int, char **)
 {
@@ -17,13 +18,7 @@ int main(int, char **)
         throw("COULD NOT LOAD FONT");
     }
 
-    struct Bar
-    {
-        float height;
-        float posX;
-        sf::Color color;
-    };
-
+    // create the randomised bars
     std::vector<Bar> bars;
     for (auto i = 0; i < window.getSize().x - 300; i += 2)
     {
@@ -34,17 +29,19 @@ int main(int, char **)
         bars.push_back(*newBar);
     }
 
-    Menu algoMenu({window.getSize().x - 200.f, 10.f}, 0);
+    Sorter sorter;
+    Menu algoMenu({window.getSize().x - 200.f, 10.f}, -1);
     Button bubbleSortBtn("Bubble Sort", {200.f, 50.f}, 20, sf::Color(89, 89, 89), sf::Color::Black, roboto);
-    Button startBtn("Start", {200, 50}, 20, sf::Color(89, 89, 89), sf::Color::Black, roboto);
+    Button mergeSortBtn("Merge Sort", {200, 50}, 20, sf::Color(89, 89, 89), sf::Color::Black, roboto);
 
     algoMenu.addButton(bubbleSortBtn);
-    algoMenu.addButton(startBtn);
+    algoMenu.addButton(mergeSortBtn);
 
-    // bubbleSortBtn.setFont(roboto);
-    // bubbleSortBtn.setPosition({window.getSize().x - 300, 0});
-    // startBtn.setFont(roboto);
-    // startBtn.setPosition({window.getSize().x - 300, 100});
+    Button startBtn("Start", {200, 50}, 20, sf::Color(89, 89, 89), sf::Color::Black, roboto);
+    startBtn.setPosition({window.getSize().x - 200.f, window.getSize().y - 100.f});
+
+    std::vector<std::vector<Bar>> barStates = {bars};
+    bool algorithmRunning = false;
 
     // main program loop
     while (window.isOpen())
@@ -62,13 +59,19 @@ int main(int, char **)
                 algoMenu.mouseMoved(window);
                 break;
             case sf::Event::MouseButtonPressed:
-                // add logic here to check whether a start or stop button was pressed
                 algoMenu.mouseClicked(window);
+                if (startBtn.isMouseHovering(window))
+                {
+                    startBtn.updateActiveState(true);
+                    algorithmRunning = true;
+                    // sorter.bubbleSort(window, bars);
+                }
+
                 break;
-            case sf::Event::Resized:
-                sf::FloatRect view(0, 0, event.size.width, event.size.height);
-                window.setView(sf::View(view));
-                break;
+                // case sf::Event::Resized:
+                //     sf::FloatRect view(0, 0, event.size.width, event.size.height);
+                //     window.setView(sf::View(view));
+                //     break;
             }
         }
 
@@ -77,11 +80,11 @@ int main(int, char **)
 
         // draw
         // draw > buttons
-        // bubbleSortBtn.drawTo(window);
-        // startBtn.drawTo(window);
+        startBtn.drawTo(window);
         algoMenu.drawTo(window);
 
         sf::RectangleShape rectangle;
+
         // draw > UI Borders
         rectangle.setSize(sf::Vector2f(3.0f, window.getSize().y));
         rectangle.setFillColor(sf::Color::White);
@@ -89,13 +92,32 @@ int main(int, char **)
         window.draw(rectangle);
 
         // draw > sorting bars
-        for (auto i = 0; i < bars.size(); ++i)
+
+        if (algorithmRunning)
         {
-            rectangle.setSize(sf::Vector2f(2.0f, bars[i].height));
-            rectangle.setOrigin(0.0f, bars[i].height);
-            rectangle.setFillColor(bars[i].color);
-            rectangle.setPosition(bars[i].posX, window.getSize().y);
-            window.draw(rectangle);
+            for (const auto &state : barStates)
+            {
+                for (auto i = 0; i < state.size(); ++i)
+                {
+                    rectangle.setSize(sf::Vector2f(2.0f, state[i].height));
+                    rectangle.setOrigin(0.0f, state[i].height);
+                    rectangle.setFillColor(state[i].color);
+                    rectangle.setPosition(state[i].posX, window.getSize().y);
+                    window.draw(rectangle);
+                }
+            }
+            algorithmRunning = false;
+        }
+        else
+        {
+            for (auto i = 0; i < bars.size(); ++i)
+            {
+                rectangle.setSize(sf::Vector2f(2.0f, bars[i].height));
+                rectangle.setOrigin(0.0f, bars[i].height);
+                rectangle.setFillColor(bars[i].color);
+                rectangle.setPosition(bars[i].posX, window.getSize().y);
+                window.draw(rectangle);
+            }
         }
 
         // end the current frame

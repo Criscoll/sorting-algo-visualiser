@@ -92,22 +92,6 @@ public:
         }
     }
 
-    void mouseClicked(sf::RenderWindow &window)
-    {
-        if (this->isMouseHovering(window))
-        {
-            if (_isSel)
-            {
-                _button.setFillColor(sf::Color::Red);
-            }
-            else
-            {
-                _button.setFillColor(sf::Color::Green);
-            }
-        }
-        _isSel = !_isSel;
-    }
-
     void updateActiveState(bool isActive)
     {
         if (isActive)

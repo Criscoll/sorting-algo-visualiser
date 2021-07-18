@@ -46,13 +46,21 @@ public:
         {
             if (_buttons[i].isMouseHovering(window))
             {
-                _buttons[i].updateActiveState(true);
                 _selectedIdx = i;
             }
+        }
+
+        updateButtonStates();
+    }
+
+    void updateButtonStates()
+    {
+        for (auto i = 0; i < _buttons.size(); ++i)
+        {
+            if (_selectedIdx == i)
+                _buttons[i].updateActiveState(true);
             else
-            {
                 _buttons[i].updateActiveState(false);
-            }
         }
     }
 
