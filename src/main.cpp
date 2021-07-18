@@ -4,11 +4,12 @@
 #include <SFML/Graphics.hpp>
 #include <unistd.h>
 #include "./headers/button.hpp"
+#include "./headers/menu.hpp"
 
 int main(int, char **)
 {
 
-    sf::RenderWindow window(sf::VideoMode(1000, 1000), "Sorting Algo Visualiser", sf::Style::Default);
+    sf::RenderWindow window(sf::VideoMode(1700, 1200), "Sorting Algo Visualiser", sf::Style::Default);
     sf::Font roboto;
 
     if (!roboto.loadFromFile("./src/fonts/Roboto-Medium.ttf"))
@@ -24,8 +25,7 @@ int main(int, char **)
     };
 
     std::vector<Bar> bars;
-
-    for (auto i = 0; i < window.getSize().x - 200; i += 2)
+    for (auto i = 0; i < window.getSize().x - 300; i += 2)
     {
         auto newBar = new Bar;
         newBar->height = rand() % (window.getSize().y - 300);
@@ -34,13 +34,17 @@ int main(int, char **)
         bars.push_back(*newBar);
     }
 
-    Button bubbleSortBtn("Bubble Sort", {200, 50}, 20, sf::Color(89, 89, 89), sf::Color::Black);
-    Button startBtn("Start", {200, 50}, 20, sf::Color(89, 89, 89), sf::Color::Black);
+    Menu algoMenu({window.getSize().x - 200.f, 10.f}, 0);
+    Button bubbleSortBtn("Bubble Sort", {200.f, 50.f}, 20, sf::Color(89, 89, 89), sf::Color::Black, roboto);
+    Button startBtn("Start", {200, 50}, 20, sf::Color(89, 89, 89), sf::Color::Black, roboto);
 
-    bubbleSortBtn.setFont(roboto);
-    bubbleSortBtn.setPosition({0, 0});
-    startBtn.setFont(roboto);
-    startBtn.setPosition({0, 100});
+    algoMenu.addButton(bubbleSortBtn);
+    algoMenu.addButton(startBtn);
+
+    // bubbleSortBtn.setFont(roboto);
+    // bubbleSortBtn.setPosition({window.getSize().x - 300, 0});
+    // startBtn.setFont(roboto);
+    // startBtn.setPosition({window.getSize().x - 300, 100});
 
     // main program loop
     while (window.isOpen())
@@ -55,13 +59,11 @@ int main(int, char **)
                 window.close();
                 break;
             case sf::Event::MouseMoved:
-                startBtn.mouseMoved(window);
-                bubbleSortBtn.mouseMoved(window);
+                algoMenu.mouseMoved(window);
                 break;
             case sf::Event::MouseButtonPressed:
                 // add logic here to check whether a start or stop button was pressed
-                startBtn.mouseClicked(window);
-                bubbleSortBtn.mouseClicked(window);
+                algoMenu.mouseClicked(window);
                 break;
             case sf::Event::Resized:
                 sf::FloatRect view(0, 0, event.size.width, event.size.height);
@@ -73,11 +75,20 @@ int main(int, char **)
         // clear the window
         window.clear();
 
-        // draw the sprites
-        bubbleSortBtn.drawTo(window);
-        startBtn.drawTo(window);
+        // draw
+        // draw > buttons
+        // bubbleSortBtn.drawTo(window);
+        // startBtn.drawTo(window);
+        algoMenu.drawTo(window);
 
         sf::RectangleShape rectangle;
+        // draw > UI Borders
+        rectangle.setSize(sf::Vector2f(3.0f, window.getSize().y));
+        rectangle.setFillColor(sf::Color::White);
+        rectangle.setPosition(window.getSize().x - 250, 0);
+        window.draw(rectangle);
+
+        // draw > sorting bars
         for (auto i = 0; i < bars.size(); ++i)
         {
             rectangle.setSize(sf::Vector2f(2.0f, bars[i].height));

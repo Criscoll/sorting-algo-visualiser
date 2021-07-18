@@ -12,6 +12,14 @@ iostream
 SFML/Graphics.hpp
 -
 
+/home/cristian/Documents/projects/C++/sorting-algo-visualiser/src/headers/menu.hpp
+iostream
+-
+SFML/Graphics.hpp
+-
+button.hpp
+/home/cristian/Documents/projects/C++/sorting-algo-visualiser/src/headers/button.hpp
+
 /home/cristian/Documents/projects/C++/sorting-algo-visualiser/src/main.cpp
 iostream
 -
@@ -25,4 +33,6 @@ unistd.h
 -
 ./headers/button.hpp
 /home/cristian/Documents/projects/C++/sorting-algo-visualiser/src/headers/button.hpp
+./headers/menu.hpp
+/home/cristian/Documents/projects/C++/sorting-algo-visualiser/src/headers/menu.hpp
 

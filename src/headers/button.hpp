@@ -1,18 +1,18 @@
+#pragma once
+
 #include <iostream>
 #include <SFML/Graphics.hpp>
-
 class Button
 {
 public:
-    Button()
-    {
-    }
+    Button();
 
-    Button(std::string t, sf::Vector2f size, int charSize, sf::Color bgColor, sf::Color textColour)
+    Button(std::string t, sf::Vector2f size, int charSize, sf::Color bgColor, sf::Color textColour, sf::Font &font)
     {
         _text.setString(t);
         _text.setFillColor(textColour);
         _text.setCharacterSize(charSize);
+        _text.setFont(font);
         _button.setFillColor(bgColor);
         _button.setSize(size);
     }
@@ -59,7 +59,7 @@ public:
         window.draw(_text);
     }
 
-    bool isMouseHovering(sf::RenderWindow &window)
+    bool isMouseHovering(sf::RenderWindow &window) const
     {
         auto mouseX = sf::Mouse::getPosition(window).x;
         auto mouseY = sf::Mouse::getPosition(window).y;
@@ -106,6 +106,20 @@ public:
             }
         }
         _isSel = !_isSel;
+    }
+
+    void updateActiveState(bool isActive)
+    {
+        if (isActive)
+        {
+            _button.setFillColor(sf::Color::Green);
+            _isSel = true;
+        }
+        else
+        {
+            _button.setFillColor(sf::Color(89, 89, 89));
+            _isSel = false;
+        }
     }
 
 private:
