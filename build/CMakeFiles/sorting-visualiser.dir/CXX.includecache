@@ -23,6 +23,8 @@ button.hpp
 /home/cristian/Documents/projects/C++/sorting-algo-visualiser/src/headers/sorter.hpp
 iostream
 -
+queue
+-
 SFML/Graphics.hpp
 -
 types.hpp
@@ -38,6 +40,8 @@ iostream
 stdlib.h
 -
 vector
+-
+queue
 -
 SFML/Graphics.hpp
 -

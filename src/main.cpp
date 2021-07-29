@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <vector>
+#include <queue>
 #include <SFML/Graphics.hpp>
 #include "./headers/sorter.hpp"
 #include "./headers/button.hpp"
@@ -13,20 +14,20 @@ int main(int, char **)
     sf::RenderWindow window(sf::VideoMode(1700, 1200), "Sorting Algo Visualiser", sf::Style::Default);
     sf::Font roboto;
 
-    if (!roboto.loadFromFile("./src/fonts/Roboto-Medium.ttf"))
+    if (!roboto.loadFromFile("../src/fonts/Roboto-Medium.ttf"))
     {
         throw("COULD NOT LOAD FONT");
     }
 
     // create the randomised bars
-    std::vector<Bar> bars;
-    for (auto i = 0; i < window.getSize().x - 300; i += 2)
+    std::vector<Bar> drawBars;
+    for (auto i = 0; i < window.getSize().x - 300; i += 4)
     {
-        auto newBar = new Bar;
-        newBar->height = rand() % (window.getSize().y - 300);
-        newBar->posX = i;
-        newBar->color = sf::Color::White;
-        bars.push_back(*newBar);
+        Bar newBar;
+        newBar.height = rand() % (window.getSize().y - 300);
+        newBar.posX = i;
+        newBar.color = sf::Color::White;
+        drawBars.push_back(newBar);
     }
 
     Sorter sorter;
@@ -40,8 +41,7 @@ int main(int, char **)
     Button startBtn("Start", {200, 50}, 20, sf::Color(89, 89, 89), sf::Color::Black, roboto);
     startBtn.setPosition({window.getSize().x - 200.f, window.getSize().y - 100.f});
 
-    std::vector<std::vector<Bar>> barStates = {bars};
-    bool algorithmRunning = false;
+    std::queue<std::vector<Bar>> sortingOrder;
 
     // main program loop
     while (window.isOpen())
@@ -57,14 +57,15 @@ int main(int, char **)
                 break;
             case sf::Event::MouseMoved:
                 algoMenu.mouseMoved(window);
+                startBtn.mouseMoved(window);
                 break;
             case sf::Event::MouseButtonPressed:
                 algoMenu.mouseClicked(window);
                 if (startBtn.isMouseHovering(window))
                 {
                     startBtn.updateActiveState(true);
-                    algorithmRunning = true;
-                    // sorter.bubbleSort(window, bars);
+                    sortingOrder = sorter.bubbleSort(drawBars);
+                    std::cout << "Returned from sorter" << std::endl;
                 }
 
                 break;
@@ -92,35 +93,24 @@ int main(int, char **)
         window.draw(rectangle);
 
         // draw > sorting bars
-
-        if (algorithmRunning)
+        if (!sortingOrder.empty())
         {
-            for (const auto &state : barStates)
-            {
-                for (auto i = 0; i < state.size(); ++i)
-                {
-                    rectangle.setSize(sf::Vector2f(2.0f, state[i].height));
-                    rectangle.setOrigin(0.0f, state[i].height);
-                    rectangle.setFillColor(state[i].color);
-                    rectangle.setPosition(state[i].posX, window.getSize().y);
-                    window.draw(rectangle);
-                }
-            }
-            algorithmRunning = false;
+            drawBars = sortingOrder.front();
+            sortingOrder.pop();
         }
-        else
+
+        for (auto i = 0; i < drawBars.size(); ++i)
         {
-            for (auto i = 0; i < bars.size(); ++i)
-            {
-                rectangle.setSize(sf::Vector2f(2.0f, bars[i].height));
-                rectangle.setOrigin(0.0f, bars[i].height);
-                rectangle.setFillColor(bars[i].color);
-                rectangle.setPosition(bars[i].posX, window.getSize().y);
-                window.draw(rectangle);
-            }
+            rectangle.setSize(sf::Vector2f(4.0f, drawBars[i].height));
+            rectangle.setOrigin(0.0f, drawBars[i].height);
+            rectangle.setFillColor(drawBars[i].color);
+            rectangle.setPosition(drawBars[i].posX, window.getSize().y);
+            window.draw(rectangle);
         }
 
         // end the current frame
         window.display();
     }
+
+    std::cout << "Program Terminated" << std::endl;
 }
