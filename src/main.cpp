@@ -7,6 +7,19 @@
 #include "./headers/button.hpp"
 #include "./headers/menu.hpp"
 #include "./headers/types.hpp"
+#include "./headers/constants.hpp"
+
+void randomiseBars(sf::RenderWindow &window, std::vector<Bar> &v)
+{
+    for (auto i = 0; i < window.getSize().x - 300; i += 6)
+    {
+        Bar newBar;
+        newBar.height = rand() % (window.getSize().y - 300);
+        newBar.posX = i;
+        newBar.color = sf::Color::White;
+        v.push_back(newBar);
+    }
+}
 
 int main(int, char **)
 {
@@ -21,25 +34,20 @@ int main(int, char **)
 
     // create the randomised bars
     std::vector<Bar> drawBars;
-    for (auto i = 0; i < window.getSize().x - 300; i += 4)
-    {
-        Bar newBar;
-        newBar.height = rand() % (window.getSize().y - 300);
-        newBar.posX = i;
-        newBar.color = sf::Color::White;
-        drawBars.push_back(newBar);
-    }
+    randomiseBars(window, drawBars);
 
     Sorter sorter;
-    Menu algoMenu({window.getSize().x - 200.f, 10.f}, -1);
-    Button bubbleSortBtn("Bubble Sort", {200.f, 50.f}, 20, sf::Color(89, 89, 89), sf::Color::Black, roboto);
-    Button mergeSortBtn("Merge Sort", {200, 50}, 20, sf::Color(89, 89, 89), sf::Color::Black, roboto);
+    Menu algoMenu({window.getSize().x - 210.f, 10.f}, Algorithm::BubbleSort);
+    Button bubbleSortBtn("Bubble Sort", {200.f, 50.f}, 20, BTN_COLOUR_DEFAULT, TEXT_COLOUR_DEFAULT, roboto);
+    Button mergeSortBtn("Merge Sort", {200, 50}, 20, BTN_COLOUR_DEFAULT, TEXT_COLOUR_DEFAULT, roboto);
 
     algoMenu.addButton(bubbleSortBtn);
     algoMenu.addButton(mergeSortBtn);
 
-    Button startBtn("Start", {200, 50}, 20, sf::Color(89, 89, 89), sf::Color::Black, roboto);
-    startBtn.setPosition({window.getSize().x - 200.f, window.getSize().y - 100.f});
+    Button startBtn("Start", {200, 50}, 20, BTN_COLOUR_DEFAULT, TEXT_COLOUR_DEFAULT, roboto);
+    Button resetBtn("Reset", {200, 50}, 20, BTN_COLOUR_DEFAULT, TEXT_COLOUR_DEFAULT, roboto);
+    startBtn.setPosition({window.getSize().x - 210.f, window.getSize().y - 200.f});
+    resetBtn.setPosition({window.getSize().x - 210.f, window.getSize().y - 100.f});
 
     std::queue<std::vector<Bar>> sortingOrder;
 
@@ -58,14 +66,23 @@ int main(int, char **)
             case sf::Event::MouseMoved:
                 algoMenu.mouseMoved(window);
                 startBtn.mouseMoved(window);
+                resetBtn.mouseMoved(window);
                 break;
             case sf::Event::MouseButtonPressed:
                 algoMenu.mouseClicked(window);
-                if (startBtn.isMouseHovering(window))
+                if (startBtn.isMouseHovering(window) && !startBtn.isDisabled())
                 {
                     startBtn.updateActiveState(true);
+                    startBtn.disable(true);
                     sortingOrder = sorter.bubbleSort(drawBars);
-                    std::cout << "Returned from sorter" << std::endl;
+                }
+                else if (resetBtn.isMouseHovering(window) && !resetBtn.isDisabled())
+                {
+                    startBtn.updateActiveState(false);
+                    startBtn.disable(false);
+                    std::queue<std::vector<Bar>>().swap(sortingOrder);
+                    drawBars.clear();
+                    randomiseBars(window, drawBars);
                 }
 
                 break;
@@ -82,6 +99,7 @@ int main(int, char **)
         // draw
         // draw > buttons
         startBtn.drawTo(window);
+        resetBtn.drawTo(window);
         algoMenu.drawTo(window);
 
         sf::RectangleShape rectangle;
@@ -101,7 +119,7 @@ int main(int, char **)
 
         for (auto i = 0; i < drawBars.size(); ++i)
         {
-            rectangle.setSize(sf::Vector2f(4.0f, drawBars[i].height));
+            rectangle.setSize(sf::Vector2f(6.0f, drawBars[i].height));
             rectangle.setOrigin(0.0f, drawBars[i].height);
             rectangle.setFillColor(drawBars[i].color);
             rectangle.setPosition(drawBars[i].posX, window.getSize().y);

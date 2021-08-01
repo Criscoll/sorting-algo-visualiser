@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include "./constants.hpp"
 class Button
 {
 public:
@@ -19,9 +20,9 @@ public:
 
     // =========== Getters ===========
 
-    bool isSelected()
+    bool isDisabled() const
     {
-        return _isSel;
+        return _isDisabled;
     }
 
     // =========== Setters ===========
@@ -83,11 +84,11 @@ public:
         {
             if (this->isMouseHovering(window))
             {
-                _button.setFillColor(sf::Color::Red);
+                _button.setFillColor(BTN_COLOUR_HOVER);
             }
             else
             {
-                _button.setFillColor(sf::Color(89, 89, 89));
+                _button.setFillColor(BTN_COLOUR_DEFAULT);
             }
         }
     }
@@ -96,13 +97,29 @@ public:
     {
         if (isActive)
         {
-            _button.setFillColor(sf::Color::Green);
+            _button.setFillColor(BTN_COLOUR_ACTIVE);
             _isSel = true;
         }
         else
         {
-            _button.setFillColor(sf::Color(89, 89, 89));
+            _button.setFillColor(BTN_COLOUR_DEFAULT);
             _isSel = false;
+        }
+    }
+
+    void disable(bool isDisabled)
+    {
+        if (isDisabled)
+        {
+            _button.setFillColor(BTN_COLOUR_FADED);
+            _text.setFillColor(TEXT_COLOUR_FADED);
+            _isDisabled = true;
+        }
+        else
+        {
+            _button.setFillColor(BTN_COLOUR_DEFAULT);
+            _text.setFillColor(TEXT_COLOUR_DEFAULT);
+            _isDisabled = false;
         }
     }
 
@@ -110,4 +127,5 @@ private:
     sf::RectangleShape _button;
     sf::Text _text;
     bool _isSel = false;
+    bool _isDisabled = false;
 };

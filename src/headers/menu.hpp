@@ -23,6 +23,7 @@ public:
     void addButton(Button newBtn)
     {
         _buttons.push_back(newBtn);
+        updateButtonStates();
     }
 
     void drawTo(sf::RenderWindow &window)

@@ -3,12 +3,6 @@
 #include <SFML/Graphics.hpp>
 #include "types.hpp"
 
-// void *operator new(size_t size)
-// {
-//     std::cout << "Allocating memory of size " << size << " bytes\n";
-//     return malloc(size);
-// }
-
 class Sorter
 {
 public:
@@ -50,7 +44,6 @@ public:
                 --upperLim;
             }
         }
-        std::cout << "just before returning the order" << std::endl;
         return states;
     }
 

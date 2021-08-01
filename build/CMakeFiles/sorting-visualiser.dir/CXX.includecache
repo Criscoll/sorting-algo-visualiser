@@ -11,6 +11,10 @@ iostream
 -
 SFML/Graphics.hpp
 -
+./constants.hpp
+/home/cristian/Documents/projects/C++/sorting-algo-visualiser/src/headers/constants.hpp
+
+/home/cristian/Documents/projects/C++/sorting-algo-visualiser/src/headers/constants.hpp
 
 /home/cristian/Documents/projects/C++/sorting-algo-visualiser/src/headers/menu.hpp
 iostream
@@ -53,4 +57,6 @@ SFML/Graphics.hpp
 /home/cristian/Documents/projects/C++/sorting-algo-visualiser/src/headers/menu.hpp
 ./headers/types.hpp
 /home/cristian/Documents/projects/C++/sorting-algo-visualiser/src/headers/types.hpp
+./headers/constants.hpp
+/home/cristian/Documents/projects/C++/sorting-algo-visualiser/src/headers/constants.hpp
 
