@@ -11,7 +11,7 @@
 
 void randomiseBars(sf::RenderWindow &window, std::vector<Bar> &v)
 {
-    for (auto i = 0; i < window.getSize().x - 300; i += 6)
+    for (auto i = 0; i < window.getSize().x - 300; i += 3)
     {
         Bar newBar;
         newBar.height = rand() % (window.getSize().y - 300);
@@ -74,7 +74,16 @@ int main(int, char **)
                 {
                     startBtn.updateActiveState(true);
                     startBtn.disable(true);
-                    sortingOrder = sorter.bubbleSort(drawBars);
+
+                    switch (algoMenu.getSelectedIdx())
+                    {
+                    case Algorithm::BubbleSort:
+                        sortingOrder = sorter.bubbleSort(drawBars);
+                        break;
+                    case Algorithm::MergeSort:
+                        sortingOrder = sorter.mergeSort(drawBars);
+                        break;
+                    }
                 }
                 else if (resetBtn.isMouseHovering(window) && !resetBtn.isDisabled())
                 {
@@ -119,7 +128,7 @@ int main(int, char **)
 
         for (auto i = 0; i < drawBars.size(); ++i)
         {
-            rectangle.setSize(sf::Vector2f(6.0f, drawBars[i].height));
+            rectangle.setSize(sf::Vector2f(3.0f, drawBars[i].height));
             rectangle.setOrigin(0.0f, drawBars[i].height);
             rectangle.setFillColor(drawBars[i].color);
             rectangle.setPosition(drawBars[i].posX, window.getSize().y);

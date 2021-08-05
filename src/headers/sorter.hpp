@@ -2,6 +2,7 @@
 #include <queue>
 #include <SFML/Graphics.hpp>
 #include "types.hpp"
+#include "constants.hpp"
 
 class Sorter
 {
@@ -47,8 +48,105 @@ public:
         return states;
     }
 
-    void mergeSort()
+    std::queue<std::vector<Bar>> mergeSort(std::vector<Bar> bars)
     {
+        std::queue<std::vector<Bar>> states;
+        states.push(bars);
+        mergeSorter(bars, states, 0, bars.size() - 1);
+        return states;
+    }
+
+    void mergeSorter(std::vector<Bar> &bars, std::queue<std::vector<Bar>> &states, int l, int r)
+    {
+        if (l < r)
+        {
+            int m = l + (r - l) / 2;
+            mergeSorter(bars, states, l, m);
+            mergeSorter(bars, states, m + 1, r);
+            merge(bars, states, l, m, r);
+        }
+    }
+
+    void merge(std::vector<Bar> &bars, std::queue<std::vector<Bar>> &states, int l, int m, int r)
+    {
+        int i, j, k, nl, nr;
+
+        //size of left and right sub-arrays
+        nl = m - l + 1;
+        nr = r - m;
+        Bar larr[nl], rarr[nr];
+
+        //fill left and right sub-arrays
+        for (i = 0; i < nl; i++)
+            larr[i] = bars[l + i];
+        for (j = 0; j < nr; j++)
+            rarr[j] = bars[m + 1 + j];
+        i = 0;
+        j = 0;
+        k = l;
+
+        // visualisation for comparing both sides of a merge (functionally does nothing)
+        while (i < nl && j < nr)
+        {
+            bars[l + i].color = BAR_COLOUR_SELECTED;
+            bars[m + 1 + j].color = BAR_COLOUR_SELECTED;
+            states.push(bars);
+            bars[l + i].color = BAR_COLOUR_DEFAULT;
+            bars[m + 1 + j].color = BAR_COLOUR_DEFAULT;
+            i++;
+            j++;
+        }
+
+        i = 0;
+        j = 0;
+
+        //merge temp arrays to real array
+        while (i < nl && j < nr)
+        {
+            if (larr[i].height <= rarr[j].height)
+            {
+                bars[k].height = larr[i].height;
+                i++;
+            }
+            else
+            {
+                bars[k].height = rarr[j].height;
+                j++;
+            }
+
+            if (k > l)
+                bars[k - 1].color = BAR_COLOUR_DEFAULT;
+            bars[k].color = BAR_COLOUR_SELECTED;
+            k++;
+
+            states.push(bars);
+        }
+
+        //extra element in left array
+        while (i < nl)
+        {
+            bars[k].height = larr[i].height;
+            bars[k - 1].color = BAR_COLOUR_DEFAULT;
+            bars[k].color = BAR_COLOUR_SELECTED;
+            i++;
+            k++;
+            states.push(bars);
+        }
+
+        //extra element in right array
+        while (j < nr)
+        {
+            bars[k].height = rarr[j].height;
+            bars[k - 1].color = BAR_COLOUR_DEFAULT;
+            bars[k].color = BAR_COLOUR_SELECTED;
+            j++;
+            k++;
+            states.push(bars);
+        }
+
+        // change the last bar selected to the default colour
+        bars[k - 1].color = BAR_COLOUR_DEFAULT;
+        states.push(bars);
     }
 
 private:

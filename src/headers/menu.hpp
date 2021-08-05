@@ -15,6 +15,10 @@ public:
     }
 
     // ============ Getters & Setters ============
+    int getSelectedIdx()
+    {
+        return _selectedIdx;
+    }
 
     // ============ Member Functions ============
     void moveUp();

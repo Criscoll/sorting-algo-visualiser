@@ -10,6 +10,9 @@
 
 #define BORDER_COLOUR_DEFAULT sf::Color(82, 82, 82)
 
+#define BAR_COLOUR_DEFAULT sf::Color::White
+#define BAR_COLOUR_SELECTED sf::Color::Red
+
 enum Algorithm
 {
     BubbleSort,

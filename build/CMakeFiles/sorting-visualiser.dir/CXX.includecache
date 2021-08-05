@@ -33,6 +33,8 @@ SFML/Graphics.hpp
 -
 types.hpp
 /home/cristian/Documents/projects/C++/sorting-algo-visualiser/src/headers/types.hpp
+constants.hpp
+/home/cristian/Documents/projects/C++/sorting-algo-visualiser/src/headers/constants.hpp
 
 /home/cristian/Documents/projects/C++/sorting-algo-visualiser/src/headers/types.hpp
 SFML/Graphics.hpp
