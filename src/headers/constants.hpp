@@ -20,4 +20,4 @@ enum Algorithm
     QuickSort,
     InsertionSort,
     RadixSort,
-};
+};  
