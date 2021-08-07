@@ -11,12 +11,12 @@
 
 void randomiseBars(sf::RenderWindow &window, std::vector<Bar> &v)
 {
-    for (auto i = 0; i < window.getSize().x - 300; i += 2)
+    for (auto i = 0; i < window.getSize().x - 300; i += 3)
     {
         Bar newBar;
         newBar.height = rand() % (window.getSize().y - 300);
         newBar.posX = i;
-        newBar.color = sf::Color::White;
+        newBar.color = BAR_COLOUR_DEFAULT;
         v.push_back(newBar);
     }
 }
@@ -41,10 +41,12 @@ int main(int, char **)
     Button bubbleSortBtn("Bubble Sort", {200.f, 50.f}, 20, BTN_COLOUR_DEFAULT, TEXT_COLOUR_DEFAULT, roboto);
     Button mergeSortBtn("Merge Sort", {200, 50}, 20, BTN_COLOUR_DEFAULT, TEXT_COLOUR_DEFAULT, roboto);
     Button quickSortBtn("Quick Sort", {200, 50}, 20, BTN_COLOUR_DEFAULT, TEXT_COLOUR_DEFAULT, roboto);
+    Button insertionSortBtn("Insertion Sort", {200, 50}, 20, BTN_COLOUR_DEFAULT, TEXT_COLOUR_DEFAULT, roboto);
 
     algoMenu.addButton(bubbleSortBtn);
     algoMenu.addButton(mergeSortBtn);
     algoMenu.addButton(quickSortBtn);
+    algoMenu.addButton(insertionSortBtn);
 
     Button startBtn("Start", {200, 50}, 20, BTN_COLOUR_DEFAULT, TEXT_COLOUR_DEFAULT, roboto);
     Button resetBtn("Reset", {200, 50}, 20, BTN_COLOUR_DEFAULT, TEXT_COLOUR_DEFAULT, roboto);
@@ -88,6 +90,9 @@ int main(int, char **)
                     case Algorithm::QuickSort:
                         sortingOrder = sorter.quickSort(drawBars);
                         break;
+                    case Algorithm::InsertionSort:
+                        sortingOrder = sorter.insertionSort(drawBars);
+                        break;
                     }
                 }
                 else if (resetBtn.isMouseHovering(window) && !resetBtn.isDisabled())
@@ -120,7 +125,7 @@ int main(int, char **)
 
         // draw > UI Borders
         rectangle.setSize(sf::Vector2f(2.0f, window.getSize().y));
-        rectangle.setFillColor(sf::Color::White);
+        rectangle.setFillColor(BORDER_COLOUR_DEFAULT);
         rectangle.setPosition(window.getSize().x - 250, 0);
         window.draw(rectangle);
 

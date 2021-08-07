@@ -19,7 +19,7 @@ public:
         b.height = tmp;
     }
 
-    std::queue<std::vector<Bar>> bubbleSort(std::vector<Bar> bars)
+    std::queue<std::vector<Bar>> bubbleSort(std::vector<Bar> &bars)
     {
         std::queue<std::vector<Bar>> states;
         states.push(bars);
@@ -30,8 +30,8 @@ public:
         {
             // std::cout << "upperLim - " << upperLim << " iter - " << iter << std::endl;
             // sort logic >  setting colours for current pair comparison
-            bars[iter - 1].color = sf::Color::White;
-            bars[iter].color = sf::Color::Red;
+            bars[iter - 1].color = BAR_COLOUR_SELECTED;
+            bars[iter].color = BAR_COLOUR_SELECTED;
 
             // sort logic > comparing adjacent pair
             if (bars[iter].height < bars[iter - 1].height)
@@ -41,12 +41,14 @@ public:
 
             states.push(bars);
 
+            bars[iter - 1].color = BAR_COLOUR_DEFAULT;
+
             // sort logic > resetting sorting loop
             ++iter;
-            if (iter >= upperLim)
+            if (iter > upperLim)
             {
-                bars[iter].color = sf::Color::White;
-                bars[upperLim].color = sf::Color::White;
+                // bars[iter].color = BAR_COLOUR_DEFAULT;
+                bars[upperLim].color = BAR_COLOUR_DEFAULT;
                 iter = 1;
                 --upperLim;
             }
@@ -54,7 +56,7 @@ public:
         return states;
     }
 
-    std::queue<std::vector<Bar>> mergeSort(std::vector<Bar> bars)
+    std::queue<std::vector<Bar>> mergeSort(std::vector<Bar> &bars)
     {
         std::queue<std::vector<Bar>> states;
         states.push(bars);
@@ -155,7 +157,7 @@ public:
         states.push(bars);
     }
 
-    std::queue<std::vector<Bar>> quickSort(std::vector<Bar> bars)
+    std::queue<std::vector<Bar>> quickSort(std::vector<Bar> &bars)
     {
         std::queue<std::vector<Bar>> states;
         states.push(bars);
@@ -206,6 +208,35 @@ public:
         swap(bars[i + 1], bars[high]);
         states.push(bars);
         return (i + 1);
+    }
+
+    std::queue<std::vector<Bar>> insertionSort(std::vector<Bar> &bars)
+    {
+        std::queue<std::vector<Bar>> states;
+        states.push(bars);
+
+        int j;
+        for (int i = 1; i < bars.size(); i++)
+        {
+            auto key = bars[i].height; //take value
+            bars[i].color = BAR_COLOUR_SELECTED_SECONDARY;
+            j = i;
+            while (j > 0 && bars[j - 1].height > key)
+            {
+                bars[j].height = bars[j - 1].height;
+                bars[j - 1].color = BAR_COLOUR_SELECTED;
+                states.push(bars);
+                bars[j - 1].color = BAR_COLOUR_DEFAULT;
+                states.push(bars);
+
+                j--;
+            }
+            bars[i].color = BAR_COLOUR_DEFAULT;
+            bars[j].height = key; //insert in right place
+            states.push(bars);
+        }
+
+        return states;
     }
 
 private:
