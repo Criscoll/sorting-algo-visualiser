@@ -200,6 +200,7 @@ public:
                 states.push(bars);
             }
         }
+
         bars[high - 1].color = BAR_COLOUR_DEFAULT;
 
         swap(bars[i + 1], bars[high]);
