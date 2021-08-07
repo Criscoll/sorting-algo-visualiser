@@ -155,5 +155,58 @@ public:
         states.push(bars);
     }
 
+    std::queue<std::vector<Bar>> quickSort(std::vector<Bar> bars)
+    {
+        std::queue<std::vector<Bar>> states;
+        states.push(bars);
+        quickSorter(bars, states, 0, bars.size() - 1);
+        return states;
+    }
+
+    void quickSorter(std::vector<Bar> &bars, std::queue<std::vector<Bar>> &states, int low, int high)
+    {
+        if (low < high)
+        {
+            // pi is the partitioning index
+            int pi = quickSortPartition(bars, states, low, high);
+
+            // Separately sort elements before
+            // partition and after partition
+            quickSorter(bars, states, low, pi - 1);
+            quickSorter(bars, states, pi + 1, high);
+        }
+    }
+
+    int quickSortPartition(std::vector<Bar> &bars, std::queue<std::vector<Bar>> &states, int low, int high)
+    {
+        int pivot = bars[high].height; // pivot
+        int i = (low - 1);             // Index of smaller element
+
+        for (int j = low; j <= high - 1; j++)
+        {
+            // If current element is smaller than or
+            // equal to pivot
+            if (j != low)
+            {
+                bars[j].color = BAR_COLOUR_SELECTED;
+                bars[j - 1].color = BAR_COLOUR_DEFAULT;
+            }
+            states.push(bars);
+
+            if (bars[j].height <= pivot)
+            {
+                i++; // increment index of smaller element
+                swap(bars[i], bars[j]);
+                states.push(bars);
+            }
+        }
+
+        bars[high - 1].color = BAR_COLOUR_DEFAULT;
+
+        swap(bars[i + 1], bars[high]);
+        states.push(bars);
+        return (i + 1);
+    }
+
 private:
 };
