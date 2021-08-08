@@ -42,11 +42,13 @@ int main(int, char **)
     Button mergeSortBtn("Merge Sort", {200, 50}, 20, BTN_COLOUR_DEFAULT, TEXT_COLOUR_DEFAULT, roboto);
     Button quickSortBtn("Quick Sort", {200, 50}, 20, BTN_COLOUR_DEFAULT, TEXT_COLOUR_DEFAULT, roboto);
     Button insertionSortBtn("Insertion Sort", {200, 50}, 20, BTN_COLOUR_DEFAULT, TEXT_COLOUR_DEFAULT, roboto);
+    Button selectionSortBtn("Selection Sort", {200, 50}, 20, BTN_COLOUR_DEFAULT, TEXT_COLOUR_DEFAULT, roboto);
 
     algoMenu.addButton(bubbleSortBtn);
     algoMenu.addButton(mergeSortBtn);
     algoMenu.addButton(quickSortBtn);
     algoMenu.addButton(insertionSortBtn);
+    algoMenu.addButton(selectionSortBtn);
 
     Button startBtn("Start", {200, 50}, 20, BTN_COLOUR_DEFAULT, TEXT_COLOUR_DEFAULT, roboto);
     Button resetBtn("Reset", {200, 50}, 20, BTN_COLOUR_DEFAULT, TEXT_COLOUR_DEFAULT, roboto);
@@ -92,6 +94,9 @@ int main(int, char **)
                         break;
                     case Algorithm::InsertionSort:
                         sortingOrder = sorter.insertionSort(drawBars);
+                        break;
+                    case Algorithm::SelectionSort:
+                        sortingOrder = sorter.selectionSort(drawBars);
                         break;
                     }
                 }

@@ -239,5 +239,37 @@ public:
         return states;
     }
 
+    std::queue<std::vector<Bar>> selectionSort(std::vector<Bar> &bars)
+    {
+
+        std::queue<std::vector<Bar>> states;
+        states.push(bars);
+
+        int i, j, imin;
+        for (i = 0; i < bars.size() - 1; i++)
+        {
+            imin = i; //get index of minimum data
+            for (j = i + 1; j < bars.size(); j++)
+            {
+                bars[i].color = BAR_COLOUR_SELECTED;
+                bars[imin].color = BAR_COLOUR_SELECTED;
+                states.push(bars);
+                bars[i].color = BAR_COLOUR_DEFAULT;
+                bars[imin].color = BAR_COLOUR_DEFAULT;
+
+                if (bars[j].height < bars[imin].height)
+                    imin = j;
+            }
+            //placing in correct position
+
+            swap(bars[i], bars[imin]);
+            bars[i].color = BAR_COLOUR_SELECTED_SECONDARY;
+            states.push(bars);
+            bars[imin].color = BAR_COLOUR_DEFAULT;
+        }
+
+        return states;
+    }
+
 private:
 };

@@ -23,5 +23,5 @@ enum Algorithm
     MergeSort,
     QuickSort,
     InsertionSort,
-    RadixSort,
+    SelectionSort,
 };
