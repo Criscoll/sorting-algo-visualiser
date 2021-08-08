@@ -28,8 +28,6 @@ public:
 
         while (upperLim >= 1)
         {
-            // std::cout << "upperLim - " << upperLim << " iter - " << iter << std::endl;
-            // sort logic >  setting colours for current pair comparison
             bars[iter - 1].color = BAR_COLOUR_SELECTED;
             bars[iter].color = BAR_COLOUR_SELECTED;
 
@@ -252,23 +250,81 @@ public:
             for (j = i + 1; j < bars.size(); j++)
             {
                 bars[i].color = BAR_COLOUR_SELECTED;
-                bars[imin].color = BAR_COLOUR_SELECTED;
+                bars[j].color = BAR_COLOUR_SELECTED;
+                bars[imin].color = BAR_COLOUR_SELECTED_SECONDARY;
                 states.push(bars);
-                bars[i].color = BAR_COLOUR_DEFAULT;
+                bars[j].color = BAR_COLOUR_DEFAULT;
                 bars[imin].color = BAR_COLOUR_DEFAULT;
+                bars[i].color = BAR_COLOUR_DEFAULT;
 
                 if (bars[j].height < bars[imin].height)
                     imin = j;
             }
-            //placing in correct position
 
+            //placing in correct position
             swap(bars[i], bars[imin]);
-            bars[i].color = BAR_COLOUR_SELECTED_SECONDARY;
+            bars[i].color = BAR_COLOUR_SELECTED;
             states.push(bars);
-            bars[imin].color = BAR_COLOUR_DEFAULT;
+            bars[i].color = BAR_COLOUR_DEFAULT;
         }
 
         return states;
+    }
+
+    std::queue<std::vector<Bar>> heapSort(std::vector<Bar> &bars)
+    {
+        std::queue<std::vector<Bar>> states;
+        states.push(bars);
+
+        int n = bars.size();
+
+        // Build heap (rearrange array)
+        for (int i = n / 2 - 1; i >= 0; i--)
+            heapify(bars, states, n, i);
+
+        // One by one extract an element from heap
+        for (int i = n - 1; i >= 0; i--)
+        {
+
+            bars[0].color = BAR_COLOUR_SELECTED;
+            bars[i].color = BAR_COLOUR_SELECTED;
+
+            // Move current root to end
+            swap(bars[0], bars[i]);
+            states.push(bars);
+            bars[0].color = BAR_COLOUR_DEFAULT;
+            bars[i].color = BAR_COLOUR_DEFAULT;
+
+            // call max heapify on the reduced heap
+            heapify(bars, states, i, 0);
+        }
+
+        return states;
+    }
+
+    void heapify(std::vector<Bar> &bars, std::queue<std::vector<Bar>> &states, int n, int i)
+    {
+        int largest = i;   // Initialize largest as root
+        int l = 2 * i + 1; // left = 2*i + 1
+        int r = 2 * i + 2; // right = 2*i + 2
+
+        // If left child is larger than root
+        if (l < n && bars[l].height > bars[largest].height)
+            largest = l;
+
+        // If right child is larger than largest so far
+        if (r < n && bars[r].height > bars[largest].height)
+            largest = r;
+
+        // If largest is not root
+        if (largest != i)
+        {
+            swap(bars[i], bars[largest]);
+            states.push(bars);
+
+            // Recursively heapify the affected sub-tree
+            heapify(bars, states, n, largest);
+        }
     }
 
 private:

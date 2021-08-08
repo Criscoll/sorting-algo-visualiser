@@ -24,4 +24,5 @@ enum Algorithm
     QuickSort,
     InsertionSort,
     SelectionSort,
+    HeapSort
 };

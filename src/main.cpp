@@ -11,10 +11,10 @@
 
 void randomiseBars(sf::RenderWindow &window, std::vector<Bar> &v)
 {
-    for (auto i = 0; i < window.getSize().x - 300; i += 3)
+    for (auto i = 0; i < window.getSize().x - 300; i += 2)
     {
         Bar newBar;
-        newBar.height = rand() % (window.getSize().y - 300);
+        newBar.height = rand() % (window.getSize().y - 200);
         newBar.posX = i;
         newBar.color = BAR_COLOUR_DEFAULT;
         v.push_back(newBar);
@@ -43,12 +43,14 @@ int main(int, char **)
     Button quickSortBtn("Quick Sort", {200, 50}, 20, BTN_COLOUR_DEFAULT, TEXT_COLOUR_DEFAULT, roboto);
     Button insertionSortBtn("Insertion Sort", {200, 50}, 20, BTN_COLOUR_DEFAULT, TEXT_COLOUR_DEFAULT, roboto);
     Button selectionSortBtn("Selection Sort", {200, 50}, 20, BTN_COLOUR_DEFAULT, TEXT_COLOUR_DEFAULT, roboto);
+    Button heapSortBtn("Heap Sort", {200, 50}, 20, BTN_COLOUR_DEFAULT, TEXT_COLOUR_DEFAULT, roboto);
 
     algoMenu.addButton(bubbleSortBtn);
     algoMenu.addButton(mergeSortBtn);
     algoMenu.addButton(quickSortBtn);
     algoMenu.addButton(insertionSortBtn);
     algoMenu.addButton(selectionSortBtn);
+    algoMenu.addButton(heapSortBtn);
 
     Button startBtn("Start", {200, 50}, 20, BTN_COLOUR_DEFAULT, TEXT_COLOUR_DEFAULT, roboto);
     Button resetBtn("Reset", {200, 50}, 20, BTN_COLOUR_DEFAULT, TEXT_COLOUR_DEFAULT, roboto);
@@ -98,6 +100,9 @@ int main(int, char **)
                     case Algorithm::SelectionSort:
                         sortingOrder = sorter.selectionSort(drawBars);
                         break;
+                    case Algorithm::HeapSort:
+                        sortingOrder = sorter.heapSort(drawBars);
+                        break;
                     }
                 }
                 else if (resetBtn.isMouseHovering(window) && !resetBtn.isDisabled())
@@ -110,10 +115,6 @@ int main(int, char **)
                 }
 
                 break;
-                // case sf::Event::Resized:
-                //     sf::FloatRect view(0, 0, event.size.width, event.size.height);
-                //     window.setView(sf::View(view));
-                //     break;
             }
         }
 
@@ -143,7 +144,7 @@ int main(int, char **)
 
         for (auto i = 0; i < drawBars.size(); ++i)
         {
-            rectangle.setSize(sf::Vector2f(3.0f, drawBars[i].height));
+            rectangle.setSize(sf::Vector2f(2.0f, drawBars[i].height));
             rectangle.setOrigin(0.0f, drawBars[i].height);
             rectangle.setFillColor(drawBars[i].color);
             rectangle.setPosition(drawBars[i].posX, window.getSize().y);
