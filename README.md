@@ -1,5 +1,5 @@
 # sorting-algo-visualiser
-A program to visualise the behaviour of various sorting algorithms using bars with randomised heights. The algorithms currently included are: Merge Sort, Quick Sort, Heap Sort, Insertion SOrt, Bubble Sort, Selection Sort. May decide to implement more obscure sorting algorithms in future :) 
+A program to visualise the behaviour of various sorting algorithms using bars with randomised heights. The algorithms currently included are: Merge Sort, Quick Sort, Heap Sort, Insertion Sort, Bubble Sort, Selection Sort. May decide to implement more obscure sorting algorithms in future :) 
 
 Written using C++ with dependence on the graphics module from the SFML library. SFML is a multimedia API which was used for creating the window and graphics for this project.
 
